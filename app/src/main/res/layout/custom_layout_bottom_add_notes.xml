@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="noteItem"
+            type="com.example.notesapplication.NoteItem" />
+        <import type="android.view.View"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="10dp"
+        android:id="@+id/bottomSheetDialogAddNotes"
+        android:background="@drawable/custom_corner_layout_bottom_sheet_add_notes">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textInputLayout"
+            app:boxStrokeColor="@color/white"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeWidth="0dp"
+            app:hintTextColor="@color/brown"
+            app:hintEnabled="true"
+            android:focusableInTouchMode="true"
+            android:textSize="20sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title != "" ? View.VISIBLE : View.GONE}'
+            android:layout_marginTop="8dp"
+            app:boxBackgroundMode="outline">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textViewNoteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:enabled="true"
+                android:fontFamily="monospace"
+                android:hint='@{noteItem.title.empty ? noteItem.textIfTitleIsNull:noteItem.textIfTitleIsNull}'
+                android:paddingStart="30dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:inputType="textMultiLine"
+                android:nestedScrollingEnabled="true"
+                android:overScrollMode="always"
+                android:scrollbarSize="0dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:text="@{noteItem.title}"
+                android:textColor="@color/black"
+                android:textColorHint="@color/brown"
+                android:textCursorDrawable="@drawable/custom_cursor_color"
+                android:textSize="15sp"
+                android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title != "" ? View.VISIBLE : View.GONE}' />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEditNote"
+            changePadding="@{noteItem}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInputLayout"
+            android:layout_marginTop="0dp"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            app:stackFromEnd="false"
+            bind:setChildrenBottomSheetAdapter="@{noteItem.notesItemBottomSheetAdapterObservableField}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipAlarmText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerViewEditNote"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:text='@{noteItem.timeNotifyNote.empty ? noteItem.textTimeNotifyNull : noteItem.timeNotifyNote}'
+            app:chipIcon="@drawable/ic_alarm"
+            app:chipIconEnabled="true"
+            app:chipIconVisible="true"
+            app:closeIcon="@drawable/ic_close"
+            app:closeIconEnabled="true" />
+
+        <TextView
+            android:id="@+id/buttonCompleteEditNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/chipAlarmText"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="monospace"
+            android:text="Hoàn tất"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+</layout>

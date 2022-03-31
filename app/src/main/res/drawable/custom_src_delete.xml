@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                        <solid android:color="#F65347"/>
+                        <size android:width="50dp" android:height="50dp"/>
+                </shape>
+            </item>
+            <item android:drawable="@drawable/ic_delete"
+                 android:height="35dp" android:width="35dp"
+                android:top="9dp"
+                android:left="7dp">
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

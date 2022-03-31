@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="childrenNoteItem"
+            type="com.example.notesapplication.ChildrenNoteItem" />
+
+        <variable
+            name="noteItem"
+            type="com.example.notesapplication.NoteItem" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:id="@+id/layoutChildrenNote">
+
+        <CheckBox
+            android:id="@+id/childrenCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:buttonTint="@color/brown"
+            android:checked="@{childrenNoteItem.checked}"
+            android:clickable="true" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="0dp"
+            android:layout_toEndOf="@+id/childrenCheckBox"
+            android:id="@+id/textChildrenInputLayout"
+            android:paddingStart="0dp"
+            android:clickable="true"
+            android:focusableInTouchMode="false"
+            android:layout_marginStart="-28dp"
+            android:focusable="false"
+            android:layout_marginTop="-6dp"
+            android:nestedScrollingEnabled="false"
+            android:focusedByDefault="false">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/childrenTextInput"
+                android:text="@{childrenNoteItem.text.trim()}"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:textColor="@{childrenNoteItem.checked ? @color/brown:@color/black}"
+                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:clickable="true"
+                android:textSize="15sp"
+                android:focusable="false"
+                bind:titleItem="@{noteItem.title}"
+                bind:changeFontStyle="@{noteItem.listNotes.size()}"
+                android:focusableInTouchMode="false"
+                android:focusedByDefault="false"
+                android:textCursorDrawable="@drawable/custom_cursor_color"
+                bind:editTextStrikeThrough="@{childrenNoteItem.checked}"
+                android:nestedScrollingEnabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+</layout>
+

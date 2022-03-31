@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/clicked_button.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/csutom.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_button_cancel.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_button_ok.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_expandable.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_expandable_less.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_expandable_more.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_when_item_state.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_corner_layout_bottom_sheet_add_notes.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_cursor_color.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_handle_selected.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_item.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_item_nav_clicked.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_item_note_clicked.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_layout_bototm_sheet.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_src_delete.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_strike_through.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_add_notes.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_notes_mimap_background.xml" value="0.2128205128205128" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/nav_ic__settings.xml" value="0.11770833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/Wifi_home.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/activity_empty_main.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/activity_main.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/activity_show_sheet_bottom_dialog_notify_notes.xml" value="0.22" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/bottom_sheet_notify_notes_on_time.xml" value="0.25" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/cloudy_home.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_bottom_add_notes.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_bottom_dialog.xml" value="0.19202898550724637" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_bottom_sheet_date_time_picker.xml" value="0.25" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_bottom_sheet_dialog.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_children_note_item.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_children_note_item_bottom_dialog.xml" value="0.17753623188405798" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_custom_children_note_item.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_header_layout.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_item_kenburn.xml" value="0.18" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_item_notes.xml" value="0.2" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_item_single_note.xml" value="0.33" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_bottom_add_notes.xml" value="0.22" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_bottom_sheet_date_picker.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_chip_ontime.xml" value="0.5" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_item_auto_slider.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_navigation_view.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_on_boarding.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_layout_test_binding_data.xml" value="0.11730072463768115" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_nested_recycler_view.xml" value="0.17753623188405798" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/custom_notification_layout.xml" value="0.33" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_add_notes.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_add_quote.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_home.xml" value="0.16" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_show_bottom_sheet_dialog_notify_notes.xml" value="0.22" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/header_layout.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/notes_activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/settings_home.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/test.xml" value="0.1838768115942029" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/thumb_home.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/viewpager2_item_layout.xml" value="0.19384057971014493" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/menu/custom_bottom_nav_menu.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/menu/custom_menu_bottom_app_bar.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/menu/custom_menu_navigation.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/menu/nav_menu.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2128205128205128" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

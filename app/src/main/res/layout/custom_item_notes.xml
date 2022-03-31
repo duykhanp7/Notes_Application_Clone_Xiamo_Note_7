@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="noteItem"
+            type="com.example.notesapplication.NoteItem" />
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:elevation="10dp"
+        android:id="@+id/itemNote"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:backgroundTint="@color/custom_item_note_clicked"
+        android:focusable="true"
+        android:longClickable="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp">
+
+            <!--CHECK BOX-->
+            <CheckBox
+                android:id="@+id/checkBoxNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:buttonTint="@color/custom_tab_layout_item_clicked"
+                android:checked="@{noteItem.checked}"
+                android:layout_marginTop="15dp"
+                android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title=="" ? View.GONE:View.VISIBLE}' />
+
+            <!--TEXT VIEW NOTE-->
+
+            <!--TEXT VIEW ON TIME OF NOTE-->
+            <TextView
+                android:id="@+id/textViewNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-12dp"
+                android:layout_marginTop="29dp"
+                android:layout_toEndOf="@+id/checkBoxNotes"
+                android:fontFamily="monospace"
+                android:text='@{noteItem.title.empty ? noteItem.textIfTitleIsNull : noteItem.title}'
+                android:textColor='@{noteItem.title.empty ? @color/brown : noteItem.checked ? @color/brown:@color/black}'
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title=="" ? View.GONE:View.VISIBLE}'
+                bind:strikeThrough="@{noteItem.checked}"
+                bind:textColorChangeByChecked="@{noteItem.checked}" />
+
+
+            <TextView
+                android:id="@+id/textViewOnTimeNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewNotes"
+                android:layout_alignStart="@+id/textViewNotes"
+                android:layout_marginTop="5dp"
+                android:fontFamily="monospace"
+                android:text="@={noteItem.timeNotifyNote}"
+                android:textColor="@{noteItem.overTime ? @color/red : noteItem.checked ? @color/brown:@color/black}"
+                android:textSize="15sp"
+                android:visibility='@{(noteItem.title.empty &amp; noteItem.listNotes.size()==1) ? View.GONE:View.VISIBLE}' />
+
+            <TextView
+                android:id="@+id/textViewNumberOfChildNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="monospace"
+                android:text="@{noteItem.numberItemCheck + '/' + noteItem.listNotes.size()}"
+                android:textSize="12sp"
+                android:visibility='@{noteItem.listNotes.size()!=1 ? View.VISIBLE : noteItem.title!="" ? View.VISIBLE:View.GONE}' />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/circleButtonShowRecyclerChildren"
+                android:layout_marginTop="28dp"
+                android:layout_alignParentEnd="true"
+                android:src="@{noteItem.expandable ? @drawable/custom_background_expandable_more : @drawable/custom_background_expandable_less}"
+                android:visibility='@{noteItem.listNotes.size()!=1 ? View.VISIBLE : noteItem.title!="" ? View.VISIBLE:View.GONE}'/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerChildrenNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewOnTimeNotes"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:textSize="14sp"
+                android:visibility="@{noteItem.expandable ? View.VISIBLE : View.GONE}"
+                bind:changePadding="@{noteItem}"
+                bind:ignore="RtlSymmetry"
+                bind:setChildrenAdapter="@{noteItem}" />
+
+            <TextView
+                android:id="@+id/textViewOnTimeNotesBelow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerChildrenNotes"
+                android:layout_alignStart="@+id/textViewNotes"
+                android:layout_marginStart="45dp"
+                android:fontFamily="monospace"
+                android:text="@={noteItem.timeNotifyNote}"
+                android:textColor="@{noteItem.overTime ? @color/red : noteItem.checked ? @color/brown:@color/black}"
+                android:textSize="15sp"
+                android:visibility='@{(noteItem.title=="" &amp; noteItem.listNotes.size()==1) ? View.VISIBLE:View.GONE}' />
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>
