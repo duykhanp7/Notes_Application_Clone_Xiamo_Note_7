@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class NotesActivityMain extends AppCompatActivity {
     private List<Fragment> lists;
     List<NoteItem> listNotes;
     private FragmentNotesAdapter fragmentNotesAdapter;
+    DatabaseSaveNoteItems databaseSaveNoteItems;
 
     AddNotesFragment addNotesFragment;
 
@@ -118,8 +120,19 @@ public class NotesActivityMain extends AppCompatActivity {
 
     }
 
+    public void InitListNoteItemsFromDatabase(){
+        listNotes = databaseSaveNoteItems.getListNoteItemsReturn();
+        for (NoteItem item :listNotes){
+            Log.i("AAA","NOTE ITEM : "+item.getId()+"-"+item.getTitle()+"-"
+                    +item.getDateNotify()+"-"+item.getTimeNotifyNote()+"-"+
+                    item.getTimeNotify());
+        }
+    }
+
     public void InitListNoteItems(){
         listNotes = new ArrayList<>();
+        databaseSaveNoteItems = new DatabaseSaveNoteItems(getApplicationContext());
+        InitListNoteItemsFromDatabase();
     }
 
 }

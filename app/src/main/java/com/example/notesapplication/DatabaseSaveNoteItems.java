@@ -1,12 +1,22 @@
 package com.example.notesapplication;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
 
@@ -74,6 +84,11 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateNotifyStr = "";
+                if(noteItem.getDateNotify() != null){
+                    dateNotifyStr = simpleDateFormat.format(noteItem.getDateNotify());
+                }
                 ContentValues contentValuesNoteItem = new ContentValues();
                 contentValuesNoteItem.put(id,String.valueOf(noteItem.getId()));
                 contentValuesNoteItem.put(title,String.valueOf(noteItem.getTitle()));
@@ -81,7 +96,7 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
                 contentValuesNoteItem.put(isExpandable,String.valueOf(noteItem.getExpandable() ? 1 : 0));
                 contentValuesNoteItem.put(isChecked,String.valueOf(noteItem.getChecked() ? 1 : 0));
                 contentValuesNoteItem.put(numberItemCheck,String.valueOf(noteItem.getNumberItemCheck()));
-                contentValuesNoteItem.put(dateNotify, String.valueOf(noteItem.getDateNotify()));
+                contentValuesNoteItem.put(dateNotify,dateNotifyStr);
                 contentValuesNoteItem.put(timeNotify,String.valueOf(noteItem.getTimeNotify()));
                 contentValuesNoteItem.put(isOverTime,String.valueOf(noteItem.isOverTime() ? 1 : 0));
                 sqLiteDatabase.insert(TABLE_NAME_NOTE_ITEM,null,contentValuesNoteItem);
@@ -126,13 +141,18 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateNotifyStr = "";
+                if(noteItem.getDateNotify() != null){
+                    dateNotifyStr = simpleDateFormat.format(noteItem.getDateNotify());
+                }
                 ContentValues contentValuesUpdateParent = new ContentValues();
                 contentValuesUpdateParent.put(title,String.valueOf(noteItem.getTitle()));
                 contentValuesUpdateParent.put(timeNotifyNote,String.valueOf(noteItem.getTimeNotifyNote()));
                 contentValuesUpdateParent.put(isExpandable,String.valueOf(noteItem.getExpandable() ? 1 : 0));
                 contentValuesUpdateParent.put(isChecked,String.valueOf(noteItem.getChecked() ? 1 : 0));
                 contentValuesUpdateParent.put(numberItemCheck,String.valueOf(noteItem.getNumberItemCheck()));
-                contentValuesUpdateParent.put(dateNotify, String.valueOf(noteItem.getDateNotify()));
+                contentValuesUpdateParent.put(dateNotify,dateNotifyStr);
                 contentValuesUpdateParent.put(timeNotify,String.valueOf(noteItem.getTimeNotify()));
                 contentValuesUpdateParent.put(isOverTime,String.valueOf(noteItem.isOverTime() ? 1 : 0));
                 sqLiteDatabase.update(TABLE_NAME_NOTE_ITEM,contentValuesUpdateParent,id+"=?",new String[]{String.valueOf(noteItem.getId())});
@@ -169,6 +189,96 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
                 sqLiteDatabase.update(TABLE_NAME_NOTE_ITEM,contentValues,id+"=?",new String[]{String.valueOf(idItem)});
             }
         }).start();
+    }
+
+    //GET LIST CHILDREN ITEMS WHICH HAS SAME PARENT ID
+    public List<ChildrenNoteItem> getReturnChildrenItemsHasSameParentId(int parentID,List<ChildrenNoteItem> listTemp){
+        List<ChildrenNoteItem> temp = new ArrayList<>();
+        for (ChildrenNoteItem item : listTemp){
+            if(parentID == item.getIdParent()){
+                temp.add(item);
+            }
+        }
+        return temp;
+    }
+
+    public Cursor getNoteItemsReturn(){
+        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_NOTE_ITEM;
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery(queryNoteItems,null);
+    }
+
+    public Cursor getChildrenItemsReturn(){
+        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_CHILDREN_ITEM;
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery(queryNoteItems,null);
+    }
+
+    //GET LIST NOTE ITEMS AND CHILDREN ITEM FROM DATABASE RETURN
+    public List<NoteItem> getListNoteItemsReturn(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        List<NoteItem> noteItemsList = new ArrayList<>();
+        List<ChildrenNoteItem> childrenItemsList = new ArrayList<>();
+
+        @SuppressLint("Recycle") Cursor cursorNoteItems = getNoteItemsReturn();
+        @SuppressLint("Recycle") Cursor cursorChildrenItems = getChildrenItemsReturn();
+
+        if(cursorChildrenItems.getCount() > 0){
+            Log.i("AAA","CURSOR CHILDREN NOT NULL");
+            while (cursorChildrenItems.moveToNext()){
+                    int idParentINT = Integer.parseInt(cursorChildrenItems.getString(0));
+                    int idChildrenINT = Integer.parseInt(cursorChildrenItems.getString(1));
+                    String textSTRING = cursorChildrenItems.getString(2);
+                    boolean isCheckedBOOLEAN = cursorChildrenItems.getString(3).equals("1");
+                    ChildrenNoteItem item = new ChildrenNoteItem(idChildrenINT,textSTRING,isCheckedBOOLEAN);
+                    item.setIdParent(idParentINT);
+                    childrenItemsList.add(item);
+            }
+        }
+        else{
+            Log.i("AAA","CURSOR CHILDREN NULL");
+        }
+        if(childrenItemsList.size()>0){
+            Log.i("AAA","CHILDREN LIST NOT NULL");
+        }
+        else {
+            Log.i("AAA","CHILDREN LIST NULL");
+        }
+        IDItem.idNoteItem = IDItem.idNoteItem + cursorNoteItems.getCount();
+        if(cursorNoteItems.getCount() > 0){
+            Log.i("AAA","CURSOR PARENT NOT NULL");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            while (cursorNoteItems.moveToNext()){
+                    int idParentINT = Integer.parseInt(cursorNoteItems.getString(0));
+                    String titleSTRING = cursorNoteItems.getString(1);
+                    String timeNotifyNoteSTRING = cursorNoteItems.getString(2);
+                    boolean isExpandableBOOLEAN = cursorNoteItems.getString(3).equals("1");
+                    boolean isCheckedBOOLEAN = cursorNoteItems.getString(4).equals("1");
+                    int numberItemCheckINT = Integer.parseInt(cursorNoteItems.getString(5));
+                    Date dateNotifyDATE = null;
+                    try {
+                        dateNotifyDATE = simpleDateFormat.parse(cursorNoteItems.getString(6));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String timeNotifySTRING = cursorNoteItems.getString(7);
+                    boolean isOverTimeBOOLEAN = cursorNoteItems.getString(8).equals("1");
+
+                    NoteItem item = new NoteItem(idParentINT,getReturnChildrenItemsHasSameParentId(idParentINT,childrenItemsList)
+                                                ,titleSTRING,timeNotifyNoteSTRING,isExpandableBOOLEAN);
+                    item.setChecked(isCheckedBOOLEAN);
+                    item.setNumberItemCheck(String.valueOf(numberItemCheckINT));
+                    item.setDateNotify(dateNotifyDATE);
+                    item.setTimeNotify(timeNotifySTRING);
+                    item.setOverTime(isOverTimeBOOLEAN);
+
+                    noteItemsList.add(item);
+            }
+        }
+        else {
+            Log.i("AAA","CURSOR PARENT NULL");
+        }
+        return noteItemsList;
     }
 
     @Override

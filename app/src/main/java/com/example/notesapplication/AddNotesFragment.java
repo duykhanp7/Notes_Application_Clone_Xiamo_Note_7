@@ -257,14 +257,14 @@ public class AddNotesFragment extends Fragment{
                     workRequest = new OneTimeWorkRequest.Builder(ShowSheetNotifyWorkerBottom.class)
                             .addTag("work_request")
                             .setInputData(data)
-                            .setInitialDelay(timeCountDown-10000, TimeUnit.MILLISECONDS)
+                            .setInitialDelay(timeCountDown, TimeUnit.MILLISECONDS)
                             .build();
                 }
                 else{
                     workRequest = new OneTimeWorkRequest.Builder(ShowSheetNotifyWorker.class)
                             .addTag("work_request")
                             .setInputData(data)
-                            .setInitialDelay(timeCountDown-10000, TimeUnit.MILLISECONDS)
+                            .setInitialDelay(timeCountDown, TimeUnit.MILLISECONDS)
                             .build();
                 }
                 WorkManager.getInstance(requireContext()).enqueue(workRequest);
@@ -323,4 +323,19 @@ public class AddNotesFragment extends Fragment{
         }
     }
 
+
+    public void saveTheLastStateOfListNoteItemsToDatabase(){
+        if(lists.size() != 0){
+            for (NoteItem item : lists){
+                databaseSaveNoteItems.updateNoteItem(item);
+            }
+        }
+    }
+
+    //SAVE THE LAST STATE OF NOTE ITEMS TO DATABASE WHEN FRAGMENT DESTROYED
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        saveTheLastStateOfListNoteItemsToDatabase();
+    }
 }

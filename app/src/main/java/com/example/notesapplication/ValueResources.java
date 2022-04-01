@@ -1,7 +1,9 @@
 package com.example.notesapplication;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -8,6 +8,7 @@ import java.util.Objects;
 public class ChildrenNoteItem extends BaseObservable{
 
 
+    int idParent;
     int idChildren = 0;
     String text;
     boolean isChecked = false;
@@ -29,6 +30,17 @@ public class ChildrenNoteItem extends BaseObservable{
         this.idChildren = idChildren;
         this.notifyPropertyChanged(BR.idChildren);
     }
+
+    @Bindable
+    public int getIdParent() {
+        return idParent;
+    }
+
+    public void setIdParent(int idParent) {
+        this.idParent = idParent;
+        this.notifyPropertyChanged(BR.idParent);
+    }
+
 
     @Bindable
     public String getText() {
