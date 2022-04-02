@@ -33,6 +33,9 @@ public class NoteItem extends BaseObservable implements Parcelable {
     Date dateNotify = null;
     String timeNotify = "";
     boolean isOverTime;
+    boolean isHoveredToDelete = false;
+
+
 
 
     public NoteItem(int id, List<ChildrenNoteItem> list, String title, String timeNotifyNote, boolean isExpandable) {
@@ -44,6 +47,7 @@ public class NoteItem extends BaseObservable implements Parcelable {
         this.isChecked = false;
         this.numberItemCheck = countNumberChildrenItemChecked(listNotes);
         this.isOverTime = false;
+        isHoveredToDelete = false;
         notesItemBottomSheetAdapterObservableField.set(new ChildrenNotesItemBottomSheetAdapter(this.listNotes,this));
     }
 
@@ -193,6 +197,16 @@ public class NoteItem extends BaseObservable implements Parcelable {
         this.notifyPropertyChanged(BR.overTime);
     }
 
+    @Bindable
+    public boolean isHoveredToDelete() {
+        return isHoveredToDelete;
+    }
+
+    public void setHoveredToDelete(boolean hoveredToDelete) {
+        isHoveredToDelete = hoveredToDelete;
+        this.notifyPropertyChanged(BR.hoveredToDelete);
+    }
+
     public String countNumberChildrenItemChecked(List<ChildrenNoteItem> listNotes){
         int a = 0;
         for (ChildrenNoteItem item : listNotes){
@@ -227,18 +241,11 @@ public class NoteItem extends BaseObservable implements Parcelable {
         this.customItemNotesBinding = customItemNotesBinding;
     }
 
-//    public CustomLayoutBottomAddNotesBinding getCustomLayoutBottomAddNotesBinding() {
-//        return customLayoutBottomAddNotesBinding;
-//    }
-//
-//    public void setCustomLayoutBottomAddNotesBinding(CustomLayoutBottomAddNotesBinding customLayoutBottomAddNotesBinding) {
-//        this.customLayoutBottomAddNotesBinding = customLayoutBottomAddNotesBinding;
-//    }
 
     @Override
     public boolean equals(Object o) {
         NoteItem noteItem = (NoteItem) o;
-        return id == noteItem.id && isExpandable == noteItem.isExpandable && isChecked == noteItem.isChecked && Objects.equals(title, noteItem.title) && Objects.equals(listNotes, noteItem.listNotes) && Objects.equals(timeNotifyNote, noteItem.timeNotifyNote) && Objects.equals(numberItemCheck, noteItem.numberItemCheck);
+        return isExpandable == noteItem.isExpandable && isChecked == noteItem.isChecked && Objects.equals(title, noteItem.title) && Objects.equals(listNotes, noteItem.listNotes) && Objects.equals(timeNotifyNote, noteItem.timeNotifyNote) && Objects.equals(numberItemCheck, noteItem.numberItemCheck);
     }
 
     @Override

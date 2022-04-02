@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableField;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.databinding.CustomItemNotesBinding;
@@ -31,6 +33,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
     public List<NoteItem> noteItemList;
     Context context;
     public static ValueResources valueResources;
+    public static ObservableField<Boolean> isShowed = new ObservableField<>();
 
     public NotesItemAdapter(List<NoteItem> lists,Context context){
         valueResources = new ValueResources();
@@ -40,6 +43,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
         SharedPreferences.Editor editor = data.edit();
         editor.putBoolean("fromChildrenCheckBox",false);
         editor.commit();
+        isShowed.set(false);
     }
 
     @NonNull
@@ -66,6 +70,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             holder.customItemNotesBinding.textViewOnTimeNotesBelow.setVisibility(View.VISIBLE);
             holder.customItemNotesBinding.recyclerChildrenNotes.setPadding(80,0,0,0);
         }
+        Log.i("AAA","ON BIND ITEM AGAIN");
     }
 
 
@@ -74,6 +79,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
     public int getItemCount() {
         return noteItemList.size();
     }
+
 
 
 
@@ -91,19 +97,34 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             this.adapter = adapter;
             this.noteItemList = noteItemList;
             itemView.getRoot().setOnClickListener(this);
+            itemView.getRoot().setOnLongClickListener(this);
             onClickCallBack(itemView.getRoot());
         }
 
         @Override
         public void onClick(View view) {
-            textChanged = true;
-            updated = false;
-            Toast.makeText(itemView.getContext(),"PARENT CLICKED +",Toast.LENGTH_LONG).show();
-            OpenBottomDialog(view);
+            if(!isShowed.get()){
+                textChanged = true;
+                updated = false;
+                Toast.makeText(itemView.getContext(),"PARENT CLICKED +",Toast.LENGTH_LONG).show();
+                OpenBottomDialog(view);
+            }
+            else{
+                noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
+            }
         }
 
         @Override
         public boolean onLongClick(View view) {
+            Log.i("AAA","IS LONG CLICKED ITEM PARENT");
+            if(!isShowed.get()){
+                NotesActivityMain.showTabLayout(View.GONE);
+                NotesActivityMain.showTopLayoutDelete(View.VISIBLE);
+                NotesActivityMain.showBottomLayoutDelete(View.VISIBLE);
+                NotesActivityMain.showButtonAddNotes(View.GONE);
+                isShowed.set(true);
+            }
+            noteItemList.get(getAdapterPosition()).setHoveredToDelete(true);
             return true;
         }
 
@@ -177,8 +198,13 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                     //CHANGE NUMBER ITEM CHECKED
                     customItemNotesBinding.getNoteItem().setNumberItemCheck
                             (String.valueOf(countItemCheck(customItemNotesBinding.getNoteItem().getListNotes())));
-                    for (ChildrenNoteItem item : noteItemList.get(getAdapterPosition()).getListNotes()){
-                    }
+                }
+            });
+
+            customItemNotesBinding.radioButtonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
                 }
             });
         }
@@ -200,51 +226,6 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                 }
             }
             return a;
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        public void CompletedEdit(BottomSheetDialog bottomSheetDialog, CustomLayoutBottomAddNotesBinding customLayoutBottomAddNotesBinding, NoteItem noteItem){
-
-            bottomSheetDialog.dismiss();
-            noteItem.setTitle(Objects.requireNonNull(customLayoutBottomAddNotesBinding.textViewNoteTitle.getText()).toString());
-            if(noteItem.getTitle().isEmpty()){
-                if(noteItem.getListNotes().size()==1){
-                    noteItem.setTitle("");
-                    if(!noteItem.getExpandable()){
-                        noteItem.setExpandable(true);
-                    }
-                }
-                if(noteItem.getListNotes().size()!=1){
-                    customItemNotesBinding.textViewNotes.setText("Danh sách việc cần làm");
-                }
-            }
-
-            Objects.requireNonNull(noteItem.notesItemBottomSheetAdapterObservableField.get()).returnTempToMainData();
-            if(noteItem.getListNotes().size() == 1 && noteItem.getListNotes().get(0).getText().isEmpty()){
-                noteItem.setExpandable(false);
-            }
-            noteItem.setNumberItemCheck(String.valueOf(countItemCheck(noteItem.getListNotes())));
-            Objects.requireNonNull(noteItem.notesItemBottomSheetAdapterObservableField.get()).notifyDataSetChanged();
-            Objects.requireNonNull(noteItem.noteItemChildrenAdapter.get()).notifyDataSetChanged();
-
-            if(noteItem.getTitle().isEmpty() && noteItem.getListNotes().size() == 1 && !noteItem.getTimeNotify().isEmpty()){
-                customItemNotesBinding.recyclerChildrenNotes.setPadding(0,0,0,-20);
-            }
-            else if(noteItem.getTitle().isEmpty() && noteItem.getListNotes().size() == 1 && noteItem.getTimeNotify().isEmpty()){
-                customItemNotesBinding.recyclerChildrenNotes.setPadding(0,32,0,-30);
-            }
-            else{
-                customItemNotesBinding.recyclerChildrenNotes.setPadding(80,0,0,0);
-            }
-
-            if(!noteItem.getTimeNotify().isEmpty()){
-                noteItem.setTimeNotifyNote(customLayoutBottomAddNotesBinding.chipAlarmText.getText().toString());
-            }
-            else{
-                noteItem.setTimeNotifyNote("");
-            }
-            updated = true;
-
         }
     }
 }

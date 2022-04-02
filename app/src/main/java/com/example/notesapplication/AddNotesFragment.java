@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
@@ -47,15 +49,19 @@ public class AddNotesFragment extends Fragment{
     public static ObservableField<NotesItemAdapter> listsObservable = new ObservableField<>();
     public static List<NoteItem> lists = null;
     boolean updated = false;
-    FragmentAddNotesBinding fragmentAddNotesBinding;
+    public static FragmentAddNotesBinding fragmentAddNotesBinding;
     public static DatabaseSaveNoteItems databaseSaveNoteItems;
     Context context;
+
+//    public static ObservableField<Boolean> stateDeleteAllItems = new ObservableField<>();
+
     public static boolean fromAddNotes = false; //variables to check bottom sheet add notes open or sheet fix open
 
 
     public AddNotesFragment(List<NoteItem> lists, Context context){
-        this.lists = lists;
+        AddNotesFragment.lists = lists;
         this.context = context;
+        //stateDeleteAllItems.set(false);
         databaseSaveNoteItems = new DatabaseSaveNoteItems(context);
     }
 
@@ -338,4 +344,5 @@ public class AddNotesFragment extends Fragment{
         super.onDestroy();
         saveTheLastStateOfListNoteItemsToDatabase();
     }
+
 }

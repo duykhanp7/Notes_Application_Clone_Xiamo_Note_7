@@ -8,7 +8,7 @@
             name="noteItem"
             type="com.example.notesapplication.NoteItem" />
         <import type="android.view.View"/>
-
+        <import type="com.example.notesapplication.NotesItemAdapter"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -91,6 +91,17 @@
                 android:textSize="12sp"
                 android:visibility='@{noteItem.listNotes.size()!=1 ? View.VISIBLE : noteItem.title!="" ? View.VISIBLE:View.GONE}' />
 
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radioButtonDelete"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="-20dp"
+                android:checked='@{noteItem.hoveredToDelete}'
+                android:visibility='@{NotesItemAdapter.isShowed ? View.VISIBLE:View.GONE}'/>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +109,7 @@
                 android:layout_marginTop="28dp"
                 android:layout_alignParentEnd="true"
                 android:src="@{noteItem.expandable ? @drawable/custom_background_expandable_more : @drawable/custom_background_expandable_less}"
-                android:visibility='@{noteItem.listNotes.size()!=1 ? View.VISIBLE : noteItem.title!="" ? View.VISIBLE:View.GONE}'/>
+                android:visibility='@{NotesItemAdapter.isShowed ? View.GONE : noteItem.listNotes.size()!=1 ? View.VISIBLE : noteItem.title!="" ? View.VISIBLE:View.GONE}'/>
 
 
             <androidx.recyclerview.widget.RecyclerView

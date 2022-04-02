@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,16 @@ public class BindingUtils {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setHasFixedSize(true);
         view.setAdapter(adapter);
+    }
+
+    @BindingAdapter({"changePaddingWhenStateDeleteChanged"})
+    public static void paddingTopCustom(RecyclerView recyclerView,boolean bool){
+        if(bool){
+            recyclerView.setPadding(0,100,0,0);
+        }
+        else{
+            recyclerView.setPadding(0,0,0,0);
+        }
     }
 
     @BindingAdapter({"setChildrenBottomSheetAdapter"})

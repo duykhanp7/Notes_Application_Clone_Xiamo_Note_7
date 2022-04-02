@@ -1,6 +1,8 @@
 package com.example.notesapplication;
 
 import static com.example.notesapplication.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.NotesItemAdapter.isShowed;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,7 +32,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         CustomChildrenNoteItemBinding customChildrenNoteItemBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext())
                 ,R.layout.custom_children_note_item
@@ -45,7 +47,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
         holder.customChildrenNoteItemBinding.setChildrenNoteItem(noteItem.getListNotes().get(position));
         holder.customChildrenNoteItemBinding.setNoteItem(noteItem);
         holder.customChildrenNoteItemBinding.childrenCheckBox.setChecked(noteItem.getListNotes().get(position).isChecked());
-        if(noteItem.getListNotes().size()==1){
+        if(noteItem.getListNotes().size()==1 && noteItem.title.trim().isEmpty()){
             noteItem.customItemNotesBinding.recyclerChildrenNotes.setPadding(0,32,0,-30);
         }
     }
@@ -57,7 +59,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         CustomChildrenNoteItemBinding customChildrenNoteItemBinding;
         NoteItem noteItem;
@@ -70,6 +72,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
             this.noteItem = noteItem;
             this.adapter = adapter;
             itemView.getRoot().setOnClickListener(this);
+            itemView.getRoot().setOnLongClickListener(this);
             OnItemClickInView();
         }
 
@@ -80,13 +83,41 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
             OpenBottomDialog(view);
         }
 
+        @Override
+        public boolean onLongClick(View view) {
+            Log.i("AAA","IS LONG CLICKED ITEM CHILDREN");
+            noteItem.setHoveredToDelete(true);
+            return true;
+        }
+
         public void OnItemClickInView(){
             customChildrenNoteItemBinding.childrenTextInput.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    updated = false;
-                    Toast.makeText(itemView.getContext(),"CHILDREN CLICKED",Toast.LENGTH_LONG).show();
-                    OpenBottomDialog(view);
+                    if(!isShowed.get()){
+                        updated = false;
+                        Toast.makeText(itemView.getContext(),"CHILDREN CLICKED",Toast.LENGTH_LONG).show();
+                        OpenBottomDialog(view);
+                    }
+                    else{
+                        noteItem.setHoveredToDelete(!noteItem.isHoveredToDelete());
+                    }
+                }
+            });
+
+            customChildrenNoteItemBinding.childrenTextInput.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Log.i("AAA","IS LONG CLICKED ITEM CHILDREN");
+                    if(!isShowed.get()){
+                        NotesActivityMain.showTabLayout(View.GONE);
+                        NotesActivityMain.showTopLayoutDelete(View.VISIBLE);
+                        NotesActivityMain.showBottomLayoutDelete(View.VISIBLE);
+                        NotesActivityMain.showButtonAddNotes(View.GONE);
+                        isShowed.set(true);
+                    }
+                    noteItem.setHoveredToDelete(true);
+                    return true;
                 }
             });
 

@@ -174,8 +174,10 @@ public class BottomSheetDialogFragmentFixNotes extends BottomSheetDialogFragment
                 noteItem.customItemNotesBinding.recyclerChildrenNotes.setPadding(0,32,0,-30);
             }
             else{
+                Log.i("AAA","INTO CLMMMMMMMMMMMMMM");
                 noteItem.customItemNotesBinding.recyclerChildrenNotes.setPadding(80,0,0,0);
             }
+
 
 
             if(!noteItem.getTimeNotify().isEmpty()){

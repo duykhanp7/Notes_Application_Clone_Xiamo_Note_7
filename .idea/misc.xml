@@ -13,6 +13,7 @@
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_background_when_item_state.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_corner_layout_bottom_sheet_add_notes.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_cursor_color.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_delete_button_clicked.xml" value="0.1355" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_handle_selected.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_item.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_item_nav_clicked.xml" value="0.22760416666666666" />
@@ -21,6 +22,7 @@
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_src_delete.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/custom_strike_through.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_add_notes.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_delete_list.xml" value="0.1355" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/ic_notes_mimap_background.xml" value="0.2128205128205128" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/drawable/nav_ic__settings.xml" value="0.11770833333333333" />
@@ -55,7 +57,7 @@
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/fragment_show_bottom_sheet_dialog_notify_notes.xml" value="0.22" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/header_layout.xml" value="0.19384057971014493" />
-        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/notes_activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/notes_activity_main.xml" value="0.2" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/settings_home.xml" value="0.19384057971014493" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/test.xml" value="0.1838768115942029" />
         <entry key="..\:/Users/duy khan/AndroidStudioProjects/NotesApplication/app/src/main/res/layout/thumb_home.xml" value="0.19384057971014493" />
