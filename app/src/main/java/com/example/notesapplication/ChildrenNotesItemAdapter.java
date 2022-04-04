@@ -87,6 +87,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
         public boolean onLongClick(View view) {
             Log.i("AAA","IS LONG CLICKED ITEM CHILDREN");
             noteItem.setHoveredToDelete(true);
+            NotesActivityMain.updateTextCountNumberItemsChecked();
             return true;
         }
 
@@ -101,6 +102,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
                     }
                     else{
                         noteItem.setHoveredToDelete(!noteItem.isHoveredToDelete());
+                        NotesActivityMain.updateTextCountNumberItemsChecked();
                     }
                 }
             });
@@ -115,8 +117,10 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
                         NotesActivityMain.showBottomLayoutDelete(View.VISIBLE);
                         NotesActivityMain.showButtonAddNotes(View.GONE);
                         isShowed.set(true);
+                        NotesActivityMain.resetStateExpandableAllItems();
                     }
                     noteItem.setHoveredToDelete(true);
+                    NotesActivityMain.updateTextCountNumberItemsChecked();
                     return true;
                 }
             });

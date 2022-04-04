@@ -22,15 +22,36 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchViewFilterAdapter"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_search_view_layout"
+                android:clickable="true"
+                android:drawableStart="@drawable/ic_search"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="true"
+                bind:iconifiedByDefault="false"
+                bind:queryBackground="@null"
+                bind:queryHint="Tìm kiếm nhiệm vụ" />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListNotes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="150dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:paddingBottom="60dp"
-                android:layout_marginTop="100dp"
                 bind:setAdapter="@{addNotesFragmentItem.listsObservable}" />
 
 

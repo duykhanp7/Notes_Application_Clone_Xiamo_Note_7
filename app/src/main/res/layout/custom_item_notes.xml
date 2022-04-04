@@ -125,7 +125,7 @@
                 android:orientation="vertical"
                 android:paddingStart="20dp"
                 android:textSize="14sp"
-                android:visibility="@{noteItem.expandable ? View.VISIBLE : View.GONE}"
+                android:visibility='@{noteItem.expandable ? View.VISIBLE : (!noteItem.expandable &amp; noteItem.title.empty &amp; noteItem.listNotes.size() == 1) ? View.VISIBLE : View.GONE}'
                 bind:changePadding="@{noteItem}"
                 bind:ignore="RtlSymmetry"
                 bind:setChildrenAdapter="@{noteItem}" />

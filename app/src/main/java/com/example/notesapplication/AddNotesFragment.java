@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.databinding.Bindable;
@@ -103,6 +104,20 @@ public class AddNotesFragment extends Fragment{
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(fragmentAddNotesBinding.recyclerViewListNotes);
 
+        fragmentAddNotesBinding.searchViewFilterAdapter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Objects.requireNonNull(listsObservable.get()).getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Objects.requireNonNull(listsObservable.get()).getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return fragmentAddNotesBinding.getRoot();
     }
 
@@ -112,7 +127,7 @@ public class AddNotesFragment extends Fragment{
         fromAddNotes = true;
         List<ChildrenNoteItem> listItemChildren = new ArrayList<>();
         listItemChildren.add(new ChildrenNoteItem(1,"",false));
-        NoteItem noteItem = new NoteItem(IDItem.idNoteItem,listItemChildren,"","",false);
+        NoteItem noteItem = new NoteItem(IDItem.idNoteItem,listItemChildren,"","",true);
         IDItem.idNoteItem++;
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(),R.style.CustomBottomSheetDialog);
@@ -327,22 +342,6 @@ public class AddNotesFragment extends Fragment{
         for (ChildrenNoteItem item : noteItem.getListNotes()){
             item.setIdChildren(i++);
         }
-    }
-
-
-    public void saveTheLastStateOfListNoteItemsToDatabase(){
-        if(lists.size() != 0){
-            for (NoteItem item : lists){
-                databaseSaveNoteItems.updateNoteItem(item);
-            }
-        }
-    }
-
-    //SAVE THE LAST STATE OF NOTE ITEMS TO DATABASE WHEN FRAGMENT DESTROYED
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        saveTheLastStateOfListNoteItemsToDatabase();
     }
 
 }

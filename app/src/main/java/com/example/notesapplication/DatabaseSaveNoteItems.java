@@ -176,6 +176,50 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
         }).start();
     }
 
+    //UPDATE NOTE ITEM WHEN APP KILLED
+    public void updateNoteItemEnd(NoteItem noteItem){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        //UPDATE NOTE ITEM
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateNotifyStr = "";
+                if(noteItem.getDateNotify() != null){
+                    dateNotifyStr = simpleDateFormat.format(noteItem.getDateNotify());
+                }
+                ContentValues contentValuesUpdateParent = new ContentValues();
+                contentValuesUpdateParent.put(title,String.valueOf(noteItem.getTitle()));
+                contentValuesUpdateParent.put(timeNotifyNote,String.valueOf(noteItem.getTimeNotifyNote()));
+                contentValuesUpdateParent.put(isExpandable,String.valueOf(noteItem.getExpandable() ? 1 : 0));
+                contentValuesUpdateParent.put(isChecked,String.valueOf(noteItem.getChecked() ? 1 : 0));
+                contentValuesUpdateParent.put(numberItemCheck,String.valueOf(noteItem.getNumberItemCheck()));
+                contentValuesUpdateParent.put(dateNotify,dateNotifyStr);
+                contentValuesUpdateParent.put(timeNotify,String.valueOf(noteItem.getTimeNotify()));
+                contentValuesUpdateParent.put(isOverTime,String.valueOf(noteItem.isOverTime() ? 1 : 0));
+                sqLiteDatabase.update(TABLE_NAME_NOTE_ITEM,contentValuesUpdateParent,id+"=?",new String[]{String.valueOf(noteItem.getId())});
+            }
+        }).start();
+
+        //UPDATE CHILDREN ITEM
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentValues contentValuesUpdateChildren = new ContentValues();
+                //sqLiteDatabase.delete(TABLE_NAME_CHILDREN_ITEM,idParent+"=?",new String[]{String.valueOf(noteItem.getId())});
+                for (ChildrenNoteItem item : noteItem.getListNotes()){
+                    contentValuesUpdateChildren.put(idParent,noteItem.getId());
+                    contentValuesUpdateChildren.put(idChildren,item.getIdChildren());
+                    contentValuesUpdateChildren.put(textChildren,item.getText());
+                    contentValuesUpdateChildren.put(isCheckedChildren,item.isChecked());
+                    sqLiteDatabase.update(TABLE_NAME_CHILDREN_ITEM,contentValuesUpdateChildren,
+                                idParent+"=? AND "+idChildren+"=?",new String[]{String.valueOf(noteItem.getId()), String.valueOf(item.getIdChildren())});
+                }
+            }
+        }).start();
+    }
+
 
     //UPDATE STATE OVERTIME OF NOTE ITEM (1 is true, 0 is false)
     public void updateStateOverTimeNoteItem(int idItem,boolean state){
@@ -202,14 +246,16 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
         return temp;
     }
 
+    //GET LIST NOTE ITEMS RETURN
     public Cursor getNoteItemsReturn(){
-        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_NOTE_ITEM;
+        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_NOTE_ITEM+" ORDER BY "+id+" ASC ";
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery(queryNoteItems,null);
     }
 
+    //GET LIST CHILDREN ITEMS RETURN
     public Cursor getChildrenItemsReturn(){
-        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_CHILDREN_ITEM;
+        String queryNoteItems = "SELECT * FROM "+TABLE_NAME_CHILDREN_ITEM+" ORDER BY "+idParent+" , "+idChildren+" ASC ";
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery(queryNoteItems,null);
     }
@@ -271,6 +317,7 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
                     item.setDateNotify(dateNotifyDATE);
                     item.setTimeNotify(timeNotifySTRING);
                     item.setOverTime(isOverTimeBOOLEAN);
+                    item.setTempExpandable(item.getExpandable() ? true : false);
 
                     noteItemsList.add(item);
             }
@@ -280,6 +327,19 @@ public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
         }
         return noteItemsList;
     }
+
+    //DELETE ALL NOTE ITEMS AND CHILDREN ITEMS IN DATABASE
+    public void deleteAllItems(){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sqLiteDatabase.delete(TABLE_NAME_NOTE_ITEM,null,null);
+                sqLiteDatabase.delete(TABLE_NAME_CHILDREN_ITEM,null,null);
+            }
+        }).start();
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

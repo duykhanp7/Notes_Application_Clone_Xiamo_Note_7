@@ -34,6 +34,7 @@ public class NoteItem extends BaseObservable implements Parcelable {
     String timeNotify = "";
     boolean isOverTime;
     boolean isHoveredToDelete = false;
+    boolean tempExpandable = false;
 
 
 
@@ -205,6 +206,15 @@ public class NoteItem extends BaseObservable implements Parcelable {
     public void setHoveredToDelete(boolean hoveredToDelete) {
         isHoveredToDelete = hoveredToDelete;
         this.notifyPropertyChanged(BR.hoveredToDelete);
+    }
+
+
+    public boolean isTempExpandable() {
+        return tempExpandable;
+    }
+
+    public void setTempExpandable(boolean tempExpandable) {
+        this.tempExpandable = tempExpandable;
     }
 
     public String countNumberChildrenItemChecked(List<ChildrenNoteItem> listNotes){

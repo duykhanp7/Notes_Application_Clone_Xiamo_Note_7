@@ -1,6 +1,7 @@
 package com.example.notesapplication;
 
 import static com.example.notesapplication.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.NotesActivityMain.listNotes;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,13 +27,16 @@ import com.example.notesapplication.databinding.CustomItemNotesBinding;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 
-public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.ViewHolder>{
+public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.ViewHolder> implements Filterable {
 
     public List<NoteItem> noteItemList;
+    public List<NoteItem> noteItemListReserve = new ArrayList<>();
     Context context;
     public static ValueResources valueResources;
     public static ObservableField<Boolean> isShowed = new ObservableField<>();
@@ -38,6 +44,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
     public NotesItemAdapter(List<NoteItem> lists,Context context){
         valueResources = new ValueResources();
         noteItemList = lists;
+        noteItemListReserve = lists;
         this.context = context;
         SharedPreferences data = context.getSharedPreferences("data_state",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = data.edit();
@@ -80,7 +87,50 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
         return noteItemList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String usersInput = charSequence.toString();
+                if(usersInput.isEmpty()){
+                    noteItemList = noteItemListReserve;
+                }
+                else{
+                    Log.i("AAA","USER INPUT : "+usersInput);
+                    List<NoteItem> noteItemsPos = new ArrayList<>();
+                    for (int i = 0 ; i < noteItemListReserve.size() ; i++){
+                        NoteItem item = noteItemListReserve.get(i);
+                        Log.i("AAA","TITLE EQUALS : "+item.getTitle() +" -- "+usersInput);
+                        if(item.getTitle().toLowerCase(Locale.ROOT).contains(usersInput.toLowerCase(Locale.ROOT))){
+                            noteItemsPos.add(item);
+                        }
+                        else{
+                            for (ChildrenNoteItem a : item.getListNotes()){
+                                Log.i("AAA","TITLE EQUALS CHILDREN : "+a.getText() +" -- "+usersInput);
+                                if(a.getText().toLowerCase(Locale.ROOT).contains(usersInput.toLowerCase(Locale.ROOT))){
+                                    noteItemsPos.add(item);
+                                }
+                            }
+                        }
+                    }
+                    noteItemList = noteItemsPos;
+                }
 
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = noteItemList;
+
+                return filterResults;
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                noteItemList = (List<NoteItem>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
@@ -111,6 +161,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             }
             else{
                 noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
+                NotesActivityMain.updateTextCountNumberItemsChecked();
             }
         }
 
@@ -122,9 +173,11 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                 NotesActivityMain.showTopLayoutDelete(View.VISIBLE);
                 NotesActivityMain.showBottomLayoutDelete(View.VISIBLE);
                 NotesActivityMain.showButtonAddNotes(View.GONE);
+                NotesActivityMain.resetStateExpandableAllItems();
                 isShowed.set(true);
             }
             noteItemList.get(getAdapterPosition()).setHoveredToDelete(true);
+            NotesActivityMain.updateTextCountNumberItemsChecked();
             return true;
         }
 
@@ -205,6 +258,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                 @Override
                 public void onClick(View view) {
                     noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
+                    NotesActivityMain.updateTextCountNumberItemsChecked();
                 }
             });
         }
