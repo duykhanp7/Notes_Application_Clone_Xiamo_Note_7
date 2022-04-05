@@ -107,6 +107,7 @@ public class AddNotesFragment extends Fragment{
         fragmentAddNotesBinding.searchViewFilterAdapter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                
                 Objects.requireNonNull(listsObservable.get()).getFilter().filter(query);
                 return false;
             }

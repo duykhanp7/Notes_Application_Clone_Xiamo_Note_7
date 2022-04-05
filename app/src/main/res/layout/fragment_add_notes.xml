@@ -47,11 +47,10 @@
                 android:id="@+id/recyclerViewListNotes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="70dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
-                android:paddingBottom="60dp"
+                android:paddingBottom="80dp"
                 bind:setAdapter="@{addNotesFragmentItem.listsObservable}" />
 
 
