@@ -50,8 +50,6 @@ public class NotesActivityMain extends AppCompatActivity {
     public static List<NoteItem> listNotes;
     private FragmentNotesAdapter fragmentNotesAdapter;
     DatabaseSaveNoteItems databaseSaveNoteItems;
-    //public static List<Boolean> stateExpandableList = new ArrayList<>();
-    //List<Boolean> booleans = new ArrayList<>();
 
     @SuppressLint("StaticFieldLeak")
     public static RelativeLayout layoutTopDeleteNote, layoutBottomButtonDelete;

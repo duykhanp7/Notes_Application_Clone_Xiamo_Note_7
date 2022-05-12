@@ -83,7 +83,7 @@ public class ShowSheetNotifyWorker extends Worker {
 
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context,"1111")
-                .setSmallIcon(R.mipmap.ic_notes_mimap_foreground)
+                .setSmallIcon(R.drawable.note_main_app_icon)
                 .setCustomContentView(notificationLayoutCustom) // CUSTOM LAYOUT CHO THÔNG BÁO
                 .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)// thử dùng NotificationCompatManager và NotificationManager????
