@@ -8,10 +8,10 @@
     <data>
         <variable
             name="valuesResources"
-            type="com.example.notesapplication.ValueResources"/>
+            type="com.example.notesapplication.resources.ValueResources"/>
         <variable
             name="noteItem"
-            type="com.example.notesapplication.NoteItem"/>
+            type="com.example.notesapplication.model.NoteItem"/>
     </data>
 
     <RelativeLayout

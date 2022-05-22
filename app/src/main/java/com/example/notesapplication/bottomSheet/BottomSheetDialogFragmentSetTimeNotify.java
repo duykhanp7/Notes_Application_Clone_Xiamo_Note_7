@@ -1,12 +1,9 @@
-package com.example.notesapplication;
-
-import static com.example.notesapplication.NotesItemAdapter.valueResources;
+package com.example.notesapplication.bottomSheet;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -14,6 +11,10 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+
+import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.R;
+import com.example.notesapplication.resources.ValueResources;
 import com.example.notesapplication.databinding.CustomBottomSheetDateTimePickerBinding;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -42,7 +43,7 @@ public class BottomSheetDialogFragmentSetTimeNotify extends BottomSheetDialogFra
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        BottomSheetDialog bottomSheetDialogChip = new BottomSheetDialog(context,R.style.CustomBottomSheetDialog);
+        BottomSheetDialog bottomSheetDialogChip = new BottomSheetDialog(context, R.style.CustomBottomSheetDialog);
         customBottomSheetDateTimePickerBinding
                 = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.custom_bottom_sheet_date_time_picker,null,false);
 

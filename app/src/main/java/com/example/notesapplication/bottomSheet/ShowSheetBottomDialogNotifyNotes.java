@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bottomSheet;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.notesapplication.R;
 
 
 public class ShowSheetBottomDialogNotifyNotes extends AppCompatActivity {

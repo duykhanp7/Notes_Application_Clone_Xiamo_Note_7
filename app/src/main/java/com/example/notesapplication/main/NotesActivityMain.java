@@ -1,42 +1,35 @@
-package com.example.notesapplication;
+package com.example.notesapplication.main;
 
-import static com.example.notesapplication.NotesItemAdapter.isShowed;
+import static com.example.notesapplication.adapter.NotesItemAdapter.isShowed;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.example.notesapplication.R;
+import com.example.notesapplication.adapter.FragmentNotesAdapter;
+import com.example.notesapplication.database.DatabaseSaveNoteItems;
+import com.example.notesapplication.fragment.AddNotesFragment;
+import com.example.notesapplication.fragment.AddQuoteFragment;
+import com.example.notesapplication.model.NoteItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 

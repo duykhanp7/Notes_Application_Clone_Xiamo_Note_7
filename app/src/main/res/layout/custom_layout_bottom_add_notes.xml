@@ -6,7 +6,7 @@
     <data>
         <variable
             name="noteItem"
-            type="com.example.notesapplication.NoteItem" />
+            type="com.example.notesapplication.model.NoteItem" />
         <import type="android.view.View"/>
     </data>
 

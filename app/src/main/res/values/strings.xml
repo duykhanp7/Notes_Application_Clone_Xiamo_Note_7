@@ -12,14 +12,4 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
-    <string-array name="names">
-        <item>Pham</item>
-        <item>Duy</item>
-        <item>Khang</item>
-        <item>Nguyen</item>
-        <item>Tuong</item>
-        <item>Vi</item>
-        <item>Khang</item>
-    </string-array>
 </resources>

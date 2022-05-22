@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.database;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -10,13 +10,15 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.model.IDItem;
+import com.example.notesapplication.model.NoteItem;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class DatabaseSaveNoteItems extends SQLiteOpenHelper {
 

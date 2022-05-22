@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bottomSheet;
 
 
 import android.annotation.SuppressLint;
@@ -9,14 +9,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import com.example.notesapplication.R;
+import com.example.notesapplication.bottomSheet.ShowSheetBottomDialogNotifyNotes;
+import com.example.notesapplication.database.DatabaseSaveNoteItems;
 
 public class ShowSheetNotifyWorker extends Worker {
 
@@ -58,7 +60,7 @@ public class ShowSheetNotifyWorker extends Worker {
         bundle.putInt("id",id);
         bundle.putString("txt",txt);
 
-        Intent intent = new Intent(context,ShowSheetBottomDialogNotifyNotes.class);
+        Intent intent = new Intent(context, ShowSheetBottomDialogNotifyNotes.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("bundle",bundle);
         @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(context,1000,intent,PendingIntent.FLAG_UPDATE_CURRENT);

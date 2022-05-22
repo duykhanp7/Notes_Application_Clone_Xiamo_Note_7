@@ -1,12 +1,12 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bottomSheet;
 
-import static com.example.notesapplication.AddNotesFragment.calculateTimeBetweenTwoDate;
-import static com.example.notesapplication.AddNotesFragment.databaseSaveNoteItems;
-import static com.example.notesapplication.AddNotesFragment.editTextNotifyOnTime;
-import static com.example.notesapplication.AddNotesFragment.lists;
-import static com.example.notesapplication.AddNotesFragment.listsObservable;
-import static com.example.notesapplication.NotesActivityMain.fragmentManager;
-import static com.example.notesapplication.NotesItemAdapter.valueResources;
+import static com.example.notesapplication.fragment.AddNotesFragment.calculateTimeBetweenTwoDate;
+import static com.example.notesapplication.fragment.AddNotesFragment.databaseSaveNoteItems;
+import static com.example.notesapplication.fragment.AddNotesFragment.editTextNotifyOnTime;
+import static com.example.notesapplication.fragment.AddNotesFragment.lists;
+import static com.example.notesapplication.fragment.AddNotesFragment.listsObservable;
+import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.adapter.NotesItemAdapter.valueResources;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -26,8 +26,10 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
-import com.example.notesapplication.databinding.CustomItemNotesBinding;
-import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.R;
+import com.example.notesapplication.fragment.AddNotesFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -55,7 +57,7 @@ public class BottomSheetDialogFragmentFixNotes extends BottomSheetDialogFragment
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         fromFixNotes = true;
-        bottomSheetDialog = new BottomSheetDialog(context,R.style.CustomBottomSheetDialog);
+        bottomSheetDialog = new BottomSheetDialog(context, R.style.CustomBottomSheetDialog);
 
         customLayoutBottomAddNotesBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(context),R.layout.custom_layout_bottom_add_notes,

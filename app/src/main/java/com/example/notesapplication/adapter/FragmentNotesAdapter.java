@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

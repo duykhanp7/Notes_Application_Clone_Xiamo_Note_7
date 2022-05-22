@@ -1,24 +1,23 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bindingUtils;
 
-import static com.example.notesapplication.NotesItemAdapter.valueResources;
+import static com.example.notesapplication.adapter.NotesItemAdapter.valueResources;
 
 import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notesapplication.adapter.ChildrenNotesItemAdapter;
+import com.example.notesapplication.bottomSheet.ChildrenNotesItemBottomSheetAdapter;
+import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.adapter.NotesItemAdapter;
+import com.example.notesapplication.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -37,7 +36,7 @@ public class BindingUtils {
     }
 
     @BindingAdapter({"setChildrenAdapter"})
-    public static void setChildrenAdapter(RecyclerView view,NoteItem noteItem){
+    public static void setChildrenAdapter(RecyclerView view, NoteItem noteItem){
         ChildrenNotesItemAdapter adapter = new ChildrenNotesItemAdapter(noteItem);
         noteItem.noteItemChildrenAdapter.set(adapter);
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -56,7 +55,7 @@ public class BindingUtils {
     }
 
     @BindingAdapter({"setChildrenBottomSheetAdapter"})
-    public static void setChildrenAdapter(RecyclerView view,ChildrenNotesItemBottomSheetAdapter adapter){
+    public static void setChildrenAdapter(RecyclerView view, ChildrenNotesItemBottomSheetAdapter adapter){
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
         manager.setStackFromEnd(false);
         view.setLayoutManager(manager);

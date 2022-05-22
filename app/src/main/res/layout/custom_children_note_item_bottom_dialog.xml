@@ -6,7 +6,7 @@
     <data>
         <variable
             name="childrenNoteItem"
-            type="com.example.notesapplication.ChildrenNoteItem" />
+            type="com.example.notesapplication.model.ChildrenNoteItem" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

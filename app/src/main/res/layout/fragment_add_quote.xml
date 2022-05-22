@@ -1,23 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddQuoteFragment"
-    android:id="@+id/addQuoteFragment"
-    android:background="#E3E3E3">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
+    <data>
+        <variable
+            name="addNotesFragmentItem"
+            type="com.example.notesapplication.fragment.AddNotesFragment" />
+        <import type="android.view.View"/>
+    </data>
+
+    <FrameLayout
+        tools:context=".fragment.AddQuoteFragment"
+        android:id="@+id/addNotesFragment"
+        android:background="#E3E3E3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="QUOTE FRAGMENT"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="40sp"/>
-    </RelativeLayout>
+            android:orientation="vertical">
 
-</FrameLayout>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchViewFilterAdapter"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_search_view_layout"
+                android:drawableStart="@drawable/ic_search"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="true"
+                bind:iconifiedByDefault="false"
+                bind:queryBackground="@null"
+                bind:queryHint="Tìm kiếm nhiệm vụ" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewListNotes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="70dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingBottom="80dp"
+                bind:setAdapter="@{addNotesFragmentItem.listsObservable}" />
+
+
+            <ImageView
+                android:id="@+id/ic_empty_notes"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="200dp"
+                android:src="@drawable/ic__note_empty"
+                android:visibility="@{addNotesFragmentItem.lists.size() != 0 ? View.INVISIBLE:View.VISIBLE}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Không còn nhiệm vụ"
+                android:textSize="20sp"
+                android:fontFamily="monospace"
+                android:layout_below="@+id/ic_empty_notes"
+                android:gravity="center"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/brown"
+                android:visibility="@{addNotesFragmentItem.lists.size() != 0 ? View.INVISIBLE:View.VISIBLE}"
+                android:id="@+id/textViewNull"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+</layout>

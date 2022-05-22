@@ -1,7 +1,7 @@
-package com.example.notesapplication;
+package com.example.notesapplication.adapter;
 
-import static com.example.notesapplication.NotesActivityMain.fragmentManager;
-import static com.example.notesapplication.NotesItemAdapter.isShowed;
+import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.adapter.NotesItemAdapter.isShowed;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,8 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.notesapplication.main.NotesActivityMain;
+import com.example.notesapplication.R;
 import com.example.notesapplication.databinding.CustomChildrenNoteItemBinding;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
+import com.example.notesapplication.resources.ValueResources;
+import com.example.notesapplication.bottomSheet.BottomSheetDialogFragmentFixNotes;
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.model.NoteItem;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +42,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         CustomChildrenNoteItemBinding customChildrenNoteItemBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext())
-                ,R.layout.custom_children_note_item
+                , R.layout.custom_children_note_item
                 ,parent
                 ,false
                 );

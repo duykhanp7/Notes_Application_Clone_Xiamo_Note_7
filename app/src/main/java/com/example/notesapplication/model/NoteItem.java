@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,10 +6,11 @@ import android.os.Parcelable;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notesapplication.BR;
+import com.example.notesapplication.adapter.ChildrenNotesItemAdapter;
+import com.example.notesapplication.bottomSheet.ChildrenNotesItemBottomSheetAdapter;
 import com.example.notesapplication.databinding.CustomItemNotesBinding;
-import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,8 @@ public class NoteItem extends BaseObservable implements Parcelable {
     public CustomItemNotesBinding customItemNotesBinding;
 
     int id = 0;
-    String title="";
-    List<ChildrenNoteItem> listNotes;
+    public String title="";
+    public List<ChildrenNoteItem> listNotes;
     String timeNotifyNote="";
     String textTimeNotifyNull="Đặt báo thức";
     boolean isExpandable;
@@ -31,7 +32,7 @@ public class NoteItem extends BaseObservable implements Parcelable {
     String textIfTitleIsNull = "Danh sách việc cần làm";
     String numberItemCheck = "0";
     Date dateNotify = null;
-    String timeNotify = "";
+    public String timeNotify = "";
     boolean isOverTime;
     boolean isHoveredToDelete = false;
     boolean tempExpandable = false;

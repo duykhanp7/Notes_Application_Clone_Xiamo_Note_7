@@ -1,12 +1,8 @@
-package com.example.notesapplication;
-
-import static com.example.notesapplication.AddNotesFragment.fromAddNotes;
-import static com.example.notesapplication.BottomSheetDialogFragmentFixNotes.fromFixNotes;
+package com.example.notesapplication.bottomSheet;
 
 import android.annotation.SuppressLint;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +14,11 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notesapplication.R;
 import com.example.notesapplication.databinding.CustomChildrenNoteItemBottomDialogBinding;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.model.NoteItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class ChildrenNotesItemBottomSheetAdapter extends RecyclerView.Adapter<Ch
     @SuppressLint("StaticFieldLeak")
     public static CustomLayoutBottomAddNotesBinding customLayoutBottomAddNotesBinding;
 
-    public ChildrenNotesItemBottomSheetAdapter(List<ChildrenNoteItem> listAdd,NoteItem noteItem) {
+    public ChildrenNotesItemBottomSheetAdapter(List<ChildrenNoteItem> listAdd, NoteItem noteItem) {
         this.noteItem = noteItem;
         this.lists = listAdd;
         temp = new ArrayList<>();

@@ -1,10 +1,12 @@
-package com.example.notesapplication;
+package com.example.notesapplication.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
+
+import com.example.notesapplication.R;
 
 public class AddQuoteFragment extends Fragment {
 

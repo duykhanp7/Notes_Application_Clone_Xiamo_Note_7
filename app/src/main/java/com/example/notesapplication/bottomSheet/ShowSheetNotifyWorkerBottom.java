@@ -1,9 +1,8 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bottomSheet;
 
-import static com.example.notesapplication.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -12,8 +11,6 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
-import java.util.concurrent.TimeUnit;
 
 public class ShowSheetNotifyWorkerBottom extends Worker {
 

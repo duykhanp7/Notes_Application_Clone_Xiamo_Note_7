@@ -1,7 +1,9 @@
-package com.example.notesapplication;
+package com.example.notesapplication.model;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+
+import com.example.notesapplication.BR;
 
 import java.util.Objects;
 

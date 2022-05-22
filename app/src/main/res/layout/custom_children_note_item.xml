@@ -6,11 +6,11 @@
     <data>
         <variable
             name="childrenNoteItem"
-            type="com.example.notesapplication.ChildrenNoteItem" />
+            type="com.example.notesapplication.model.ChildrenNoteItem" />
 
         <variable
             name="noteItem"
-            type="com.example.notesapplication.NoteItem" />
+            type="com.example.notesapplication.model.NoteItem" />
 
     </data>
 

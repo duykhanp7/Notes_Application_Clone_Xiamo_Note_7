@@ -1,26 +1,18 @@
-package com.example.notesapplication;
+package com.example.notesapplication.fragment;
 
-import static android.content.Context.ALARM_SERVICE;
-import static com.example.notesapplication.NotesActivityMain.fragmentManager;
-import static com.example.notesapplication.NotesItemAdapter.valueResources;
+import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.adapter.NotesItemAdapter.valueResources;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.ContentLoadingProgressBar;
-import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.fragment.app.Fragment;
@@ -28,20 +20,25 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
+import com.example.notesapplication.bottomSheet.BottomSheetDialogFragmentSetTimeNotify;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 import com.example.notesapplication.databinding.FragmentAddNotesBinding;
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.database.DatabaseSaveNoteItems;
+import com.example.notesapplication.model.IDItem;
+import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.adapter.NotesItemAdapter;
+import com.example.notesapplication.R;
+import com.example.notesapplication.bottomSheet.ShowSheetNotifyWorker;
+import com.example.notesapplication.bottomSheet.ShowSheetNotifyWorkerBottom;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
@@ -69,7 +66,7 @@ public class AddNotesFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentAddNotesBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_notes,container,false);
+        fragmentAddNotesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_notes,container,false);
         listsObservable.set(new NotesItemAdapter(lists, requireContext()));
         fragmentAddNotesBinding.setAddNotesFragmentItem(this);
 

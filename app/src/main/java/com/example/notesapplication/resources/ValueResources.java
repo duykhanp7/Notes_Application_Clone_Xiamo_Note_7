@@ -1,4 +1,4 @@
-package com.example.notesapplication;
+package com.example.notesapplication.resources;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -16,7 +16,7 @@ public class ValueResources {
 
     List<String> listDateString = new ArrayList<>();
     List<Date> listDateDate = new ArrayList<>();
-    List<String> dateFormatStandardList = new ArrayList<>();
+    public List<String> dateFormatStandardList = new ArrayList<>();
 
 
 

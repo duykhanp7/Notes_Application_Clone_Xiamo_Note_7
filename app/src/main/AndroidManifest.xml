@@ -16,7 +16,7 @@
         android:theme="@style/Theme.NotesApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".NotesActivityMain"
+            android:name=".main.NotesActivityMain"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ShowSheetBottomDialogNotifyNotes"
+        <activity android:name=".bottomSheet.ShowSheetBottomDialogNotifyNotes"
                 android:enabled="true"
                 android:exported="true"
                 android:theme="@style/Theme.AppCompat.Translucent"

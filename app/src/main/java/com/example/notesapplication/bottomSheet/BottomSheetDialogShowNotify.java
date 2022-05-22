@@ -1,6 +1,6 @@
-package com.example.notesapplication;
+package com.example.notesapplication.bottomSheet;
 
-import static com.example.notesapplication.AddNotesFragment.databaseSaveNoteItems;
+import static com.example.notesapplication.fragment.AddNotesFragment.databaseSaveNoteItems;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.R;
+import com.example.notesapplication.fragment.AddNotesFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 

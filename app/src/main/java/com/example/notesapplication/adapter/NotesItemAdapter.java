@@ -1,7 +1,6 @@
-package com.example.notesapplication;
+package com.example.notesapplication.adapter;
 
-import static com.example.notesapplication.NotesActivityMain.fragmentManager;
-import static com.example.notesapplication.NotesActivityMain.listNotes;
+import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,17 +19,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notesapplication.databinding.CustomItemNotesBinding;
-import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.example.notesapplication.main.NotesActivityMain;
+import com.example.notesapplication.R;
+import com.example.notesapplication.resources.ValueResources;
+import com.example.notesapplication.bottomSheet.BottomSheetDialogFragmentFixNotes;
+import com.example.notesapplication.model.ChildrenNoteItem;
+import com.example.notesapplication.model.NoteItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 
 public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.ViewHolder> implements Filterable {
@@ -58,7 +58,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CustomItemNotesBinding customItemNotesBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext())
-                ,R.layout.custom_item_notes,parent,false
+                , R.layout.custom_item_notes,parent,false
         );
         return new ViewHolder(customItemNotesBinding,this,noteItemList);
     }
