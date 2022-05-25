@@ -9,11 +9,13 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notesapplication.adapter.ChildrenNotesItemAdapter;
+import com.example.notesapplication.adapter.QuotesItemAdapter;
 import com.example.notesapplication.bottomSheet.ChildrenNotesItemBottomSheetAdapter;
 import com.example.notesapplication.model.NoteItem;
 import com.example.notesapplication.adapter.NotesItemAdapter;
@@ -163,6 +165,14 @@ public class BindingUtils {
         else{
             numberPicker.setValue(Integer.parseInt(noteItem.getTimeNotify().split(":")[1]));
         }
+    }
+
+    @BindingAdapter("quotesAdapter")
+    public static void setQuotesAdapter(RecyclerView recyclerView, QuotesItemAdapter adapter){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
 }

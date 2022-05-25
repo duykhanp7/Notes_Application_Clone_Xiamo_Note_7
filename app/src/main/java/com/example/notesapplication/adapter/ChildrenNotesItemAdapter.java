@@ -1,5 +1,6 @@
 package com.example.notesapplication.adapter;
 
+import static com.example.notesapplication.fragment.AddNotesFragment.isHoveredDelete;
 import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
 import static com.example.notesapplication.adapter.NotesItemAdapter.isShowed;
 
@@ -80,6 +81,10 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
             this.adapter = adapter;
             itemView.getRoot().setOnClickListener(this);
             itemView.getRoot().setOnLongClickListener(this);
+            itemView.layoutChildrenNote.setOnLongClickListener(this);
+            itemView.childrenCheckBox.setOnLongClickListener(this);
+            itemView.textChildrenInputLayout.setOnLongClickListener(this);
+            itemView.childrenTextInput.setOnLongClickListener(this);
             OnItemClickInView();
         }
 
@@ -92,9 +97,17 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
 
         @Override
         public boolean onLongClick(View view) {
-            Log.i("AAA","IS LONG CLICKED ITEM CHILDREN");
+            if(!isShowed.get()){
+                NotesActivityMain.showTabLayout(View.GONE);
+                NotesActivityMain.showTopLayoutDelete(View.VISIBLE);
+                NotesActivityMain.showBottomLayoutDelete(View.VISIBLE);
+                NotesActivityMain.showButtonAddNotes(View.GONE);
+                NotesActivityMain.resetStateExpandableAllItems();
+                isShowed.set(true);
+            }
             noteItem.setHoveredToDelete(true);
-            NotesActivityMain.updateTextCountNumberItemsChecked();
+            NotesActivityMain.updateTextCountNumberItemsChecked(1);
+            isHoveredDelete.set(true);
             return true;
         }
 
@@ -109,7 +122,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
                     }
                     else{
                         noteItem.setHoveredToDelete(!noteItem.isHoveredToDelete());
-                        NotesActivityMain.updateTextCountNumberItemsChecked();
+                        NotesActivityMain.updateTextCountNumberItemsChecked(1);
                     }
                 }
             });
@@ -127,7 +140,7 @@ public class ChildrenNotesItemAdapter extends RecyclerView.Adapter<ChildrenNotes
                         NotesActivityMain.resetStateExpandableAllItems();
                     }
                     noteItem.setHoveredToDelete(true);
-                    NotesActivityMain.updateTextCountNumberItemsChecked();
+                    NotesActivityMain.updateTextCountNumberItemsChecked(1);
                     return true;
                 }
             });

@@ -24,6 +24,7 @@ import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
 import com.example.notesapplication.bottomSheet.BottomSheetDialogFragmentSetTimeNotify;
+import com.example.notesapplication.databinding.BottomSheetAddQuotesLayoutBinding;
 import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 import com.example.notesapplication.databinding.FragmentAddNotesBinding;
 import com.example.notesapplication.model.ChildrenNoteItem;
@@ -49,6 +50,8 @@ public class AddNotesFragment extends Fragment{
     boolean updated = false;
     public static FragmentAddNotesBinding fragmentAddNotesBinding;
     public static DatabaseSaveNoteItems databaseSaveNoteItems;
+    public static ObservableField<Boolean> isHoveredDelete;
+
     Context context;
 
 //    public static ObservableField<Boolean> stateDeleteAllItems = new ObservableField<>();
@@ -61,6 +64,7 @@ public class AddNotesFragment extends Fragment{
         this.context = context;
         //stateDeleteAllItems.set(false);
         databaseSaveNoteItems = new DatabaseSaveNoteItems(context);
+        isHoveredDelete = new ObservableField<>(false);
     }
 
     @Override
@@ -203,6 +207,7 @@ public class AddNotesFragment extends Fragment{
                 }
             }
         });
+
 
         customLayoutBottomAddNotesBinding.chipAlarmText.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,8 @@
 package com.example.notesapplication.main;
 
 import static com.example.notesapplication.adapter.NotesItemAdapter.isShowed;
+import static com.example.notesapplication.fragment.AddNotesFragment.isHoveredDelete;
+import static com.example.notesapplication.fragment.AddQuoteFragment.modeDelete;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ import com.example.notesapplication.database.DatabaseSaveNoteItems;
 import com.example.notesapplication.fragment.AddNotesFragment;
 import com.example.notesapplication.fragment.AddQuoteFragment;
 import com.example.notesapplication.model.NoteItem;
+import com.example.notesapplication.model.QuoteItem;
+import com.example.notesapplication.roomdatabase.DatabaseObject;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -38,9 +42,10 @@ public class NotesActivityMain extends AppCompatActivity {
 
     public static TabLayout tabLayoutNote;
     public static FloatingActionButton floatingButtonAddNotes;
-    private ViewPager2 viewPager2;
-    private List<Fragment> lists;
+    public static ViewPager2 viewPager2;
+    private List<Fragment> fragmentList;
     public static List<NoteItem> listNotes;
+    public static List<QuoteItem> listQuotes;
     private FragmentNotesAdapter fragmentNotesAdapter;
     DatabaseSaveNoteItems databaseSaveNoteItems;
 
@@ -52,6 +57,7 @@ public class NotesActivityMain extends AppCompatActivity {
     public static TextView textViewNumberItemsChecked,buttonDeleteNotes;
 
     AddNotesFragment addNotesFragment;
+    AddQuoteFragment addQuoteFragment;
 
     public static FragmentManager fragmentManager;
 
@@ -78,10 +84,10 @@ public class NotesActivityMain extends AppCompatActivity {
             tabLayoutNote.setTabMode(TabLayout.MODE_FIXED);
             tabLayoutNote.setSelectedTabIndicatorColor(android.R.color.transparent);
 
-            InitListNoteItems();
+            InitListNoteItemsAndQuotesItems();
             InitListsFragment();
 
-            fragmentNotesAdapter = new FragmentNotesAdapter(this,lists);
+            fragmentNotesAdapter = new FragmentNotesAdapter(this, fragmentList);
             viewPager2.setAdapter(fragmentNotesAdapter);
 
             new TabLayoutMediator(tabLayoutNote, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -122,29 +128,51 @@ public class NotesActivityMain extends AppCompatActivity {
             floatingButtonAddNotes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addNotesFragment.OpenBottomSheetDialogAddNotes();
+                    if(viewPager2.getCurrentItem() == 0){
+                        addQuoteFragment.OpenBottomSheetAddQuotes();
+                    }
+                    else{
+                        addNotesFragment.OpenBottomSheetDialogAddNotes();
+                    }
                 }
             });
 
             buttonCloseSheetDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    resetStateDeleteAllItems(false);
-                    isShowed.set(false);
+                    viewPager2.setUserInputEnabled(true);
+                    int pos = viewPager2.getCurrentItem();
+                    if(pos == 0){
+                        modeDelete.set(false);
+                        addQuoteFragment.resetStateAllQuoteItems(false);
+                    }
+                    else{
+                        isHoveredDelete.set(false);
+                        resetStateDeleteAllItems(false,pos);
+                        isShowed.set(false);
+                        resetStateExpandableOriginal();
+                    }
                     showTabLayout(View.VISIBLE);
                     showTopLayoutDelete(View.GONE);
                     showBottomLayoutDelete(View.GONE);
                     showButtonAddNotes(View.VISIBLE);
-                    resetStateExpandableOriginal();
                 }
             });
 
             buttonSelectAllItems.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(allItemsIsChecked()){
+                    int posViewPager = viewPager2.getCurrentItem();
+//                    if(posViewPager == 0){
+//                        addQuoteFragment.resetStateAllQuoteItems(true);
+//                    }
+//                    else{
+//
+//                    }
+                    int posCurrentPager = viewPager2.getCurrentItem();
+                    if(allItemsIsChecked(posCurrentPager)){
                         Log.i("AAA","ALLL FALSEEEEEEEEEEEE");
-                        resetStateDeleteAllItems(false);
+                        resetStateDeleteAllItems(false,posCurrentPager);
                         textViewNumberItemsChecked.post(new Runnable() {
                             @Override
                             public void run() {
@@ -155,8 +183,8 @@ public class NotesActivityMain extends AppCompatActivity {
                     }
                     else{
                         Log.i("AAA","TRUEEEEEEEEEEEEEEEEE");
-                        resetStateDeleteAllItems(true);
-                        updateTextCountNumberItemsChecked();
+                        resetStateDeleteAllItems(true,posCurrentPager);
+                        updateTextCountNumberItemsChecked(posCurrentPager);
                     }
                 }
             });
@@ -171,31 +199,36 @@ public class NotesActivityMain extends AppCompatActivity {
                     showBottomLayoutDelete(View.GONE);
                     showTabLayout(View.VISIBLE);
                     showButtonAddNotes(View.VISIBLE);
+                    isHoveredDelete.set(false);
+                    viewPager2.setUserInputEnabled(true);
                 }
             });
 
     }
 
     public void InitListsFragment(){
-        lists = new ArrayList<>();
-        lists.add(new AddQuoteFragment());
+        fragmentList = new ArrayList<>();
         addNotesFragment = new AddNotesFragment(listNotes,getApplicationContext());
-        lists.add(addNotesFragment);
+        addQuoteFragment = new AddQuoteFragment(listQuotes);
+        fragmentList.add(addQuoteFragment);
+        fragmentList.add(addNotesFragment);
     }
 
     public void InitListNoteItemsFromDatabase(){
         listNotes = databaseSaveNoteItems.getListNoteItemsReturn();
-        for (NoteItem item :listNotes){
-            Log.i("AAA","NOTE ITEM : "+item.getId()+"-"+item.getTitle()+"-"
-                    +item.getDateNotify()+"-"+item.getTimeNotifyNote()+"-"+
-                    item.getTimeNotify());
-        }
     }
 
-    public void InitListNoteItems(){
+    public void InitListQuoteItemsFromDatabase(){
+        listQuotes = DatabaseObject.getInstance(this).roomDatabaseDao().getQuoteItems();
+    }
+
+    //RETRIEVE DATA FROM DATABASE
+    public void InitListNoteItemsAndQuotesItems(){
         listNotes = new ArrayList<>();
+        listQuotes = new ArrayList<>();
         databaseSaveNoteItems = new DatabaseSaveNoteItems(getApplicationContext());
         InitListNoteItemsFromDatabase();
+        InitListQuoteItemsFromDatabase();
     }
 
     public static void showTopLayoutDelete(int visibility){
@@ -252,43 +285,78 @@ public class NotesActivityMain extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(checkLayoutDeleteIsShow()){
-            resetStateDeleteAllItems(false);
-            showTabLayout(View.VISIBLE);
-            showTopLayoutDelete(View.GONE);
-            showBottomLayoutDelete(View.GONE);
-            showButtonAddNotes(View.VISIBLE);
-            isShowed.set(false);
-
-            //////////RESET STATE OF NOTE ITEMS BACK TO ORIGINALS
-            resetStateExpandableOriginal();
+        viewPager2.setUserInputEnabled(true);
+        int posViewPager = viewPager2.getCurrentItem();
+        if(posViewPager == 0){
+            modeDelete.set(false);
+            addQuoteFragment.returnToCurrentQuoteItems();
+            addQuoteFragment.resetStateAllQuoteItems(false);
+            if(checkLayoutDeleteIsShow()){
+                showTabLayout(View.VISIBLE);
+                showTopLayoutDelete(View.GONE);
+                showBottomLayoutDelete(View.GONE);
+                showButtonAddNotes(View.VISIBLE);
+            }
         }
         else{
-            super.onBackPressed();
+            if(checkLayoutDeleteIsShow()){
+                isHoveredDelete.set(false);
+                resetStateDeleteAllItems(false,posViewPager);
+                showTabLayout(View.VISIBLE);
+                showTopLayoutDelete(View.GONE);
+                showBottomLayoutDelete(View.GONE);
+                showButtonAddNotes(View.VISIBLE);
+                isShowed.set(false);
+
+                //////////RESET STATE OF NOTE ITEMS BACK TO ORIGINALS
+                resetStateExpandableOriginal();
+            }
+            else{
+                super.onBackPressed();
+            }
         }
     }
 
-    public void resetStateDeleteAllItems(boolean state){
-        for (int i = 0; i < listNotes.size(); i++) {
-            listNotes.get(i).setHoveredToDelete(state);
+    public void resetStateDeleteAllItems(boolean state, int pos){
+
+        if(pos == 0){
+            for (QuoteItem item : listQuotes){
+                //item.setStateCheckedToDelete(state);
+                item.setStateChecked(state);
+            }
+        }
+        else{
+            for (int i = 0; i < listNotes.size(); i++) {
+                listNotes.get(i).setHoveredToDelete(state);
+            }
         }
     }
 
     //CHANGE ALL STATE EXPANDABLE OF ITEMS TO FALSE
     public static void resetStateExpandableAllItems(){
         for (NoteItem item : listNotes){
-            item.setTempExpandable(item.getExpandable() ? true : false);
+            item.setTempExpandable(item.getExpandable());
             item.setExpandable(false);
         }
     }
 
     public void resetStateExpandableOriginal(){
         for (NoteItem item : listNotes){
-            item.setExpandable(item.isTempExpandable() ? true : false);
+            item.setExpandable(item.isTempExpandable());
         }
     }
 
-    public boolean allItemsIsChecked(){
+    public boolean allItemsIsChecked(int pos){
+
+        if(pos == 0){
+            for (QuoteItem item : listQuotes){
+                if(!item.isStateChecked()){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         for (NoteItem item :listNotes){
             if(!item.isHoveredToDelete()){
                 return false;
@@ -301,60 +369,109 @@ public class NotesActivityMain extends AppCompatActivity {
     @SuppressLint("NotifyDataSetChanged")
     public void deleteItems(){
         List<NoteItem> listItemsDelete = new ArrayList<>();
-
-        if(allItemsIsChecked()){
-            listNotes.clear();
-            databaseSaveNoteItems.deleteAllItems();
-            Objects.requireNonNull(AddNotesFragment.listsObservable.get()).notifyDataSetChanged();
-            AddNotesFragment.fragmentAddNotesBinding.icEmptyNotes.post(new Runnable() {
-                @Override
-                public void run() {
-                    AddNotesFragment.fragmentAddNotesBinding.icEmptyNotes.setVisibility(View.VISIBLE);
-                }
-            });
-            AddNotesFragment.fragmentAddNotesBinding.textViewNull.post(new Runnable() {
-                @Override
-                public void run() {
-                    AddNotesFragment.fragmentAddNotesBinding.textViewNull.setVisibility(View.VISIBLE);
-                }
-            });
+        List<QuoteItem> listQuoteItemsDelete = new ArrayList<>();
+        int posCurrentPager = viewPager2.getCurrentItem();
+        if(allItemsIsChecked(posCurrentPager)){
+            if(posCurrentPager == 0){
+                modeDelete.set(false);
+                listQuotes.clear();
+                Objects.requireNonNull(AddQuoteFragment.quotesItemAdapterObservableField.get()).clearQuoteItems();
+                DatabaseObject.getInstance(this).roomDatabaseDao().deleteAllQuoteItems();
+                AddQuoteFragment.binding.icEmptyNotes.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AddQuoteFragment.binding.icEmptyNotes.setVisibility(View.VISIBLE);
+                    }
+                });
+                AddQuoteFragment.binding.textViewNull.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AddQuoteFragment.binding.textViewNull.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+            else{
+                listNotes.clear();
+                databaseSaveNoteItems.deleteAllItems();
+                Objects.requireNonNull(AddNotesFragment.listsObservable.get()).notifyDataSetChanged();
+                AddNotesFragment.fragmentAddNotesBinding.icEmptyNotes.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AddNotesFragment.fragmentAddNotesBinding.icEmptyNotes.setVisibility(View.VISIBLE);
+                    }
+                });
+                AddNotesFragment.fragmentAddNotesBinding.textViewNull.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AddNotesFragment.fragmentAddNotesBinding.textViewNull.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
         }
         else{
-            int size = listNotes.size();
-            for (int i = 0; i < listNotes.size(); ++i){
-                NoteItem item = listNotes.get(i);
-                if(item.isHoveredToDelete()){
-                    listItemsDelete.add(item);
-                    databaseSaveNoteItems.deleteNoteItem(item.getId());
+            if(posCurrentPager == 0){
+                int size = listQuotes.size();
+                for (int i = 0; i < listQuotes.size(); ++i){
+                    QuoteItem item = listQuotes.get(i);
+                    if(item.isStateChecked()){
+                        listQuoteItemsDelete.add(item);
+                        DatabaseObject.getInstance(this).roomDatabaseDao().deleteQuoteItem(item);
+                    }
+                }
+                listQuotes.removeAll(listQuoteItemsDelete);
+                Objects.requireNonNull(AddQuoteFragment.quotesItemAdapterObservableField.get()).removeQuoteItems(listQuoteItemsDelete);
+                modeDelete.set(false);
+                for (QuoteItem item : listQuotes){
+                    item.setStateCheckedToDelete(false);
+                    item.setStateChecked(false);
                 }
             }
-            listNotes.removeAll(listItemsDelete);
-            Objects.requireNonNull(AddNotesFragment.listsObservable.get()).notifyItemRangeRemoved(0,size);
+            else{
+                int size = listNotes.size();
+                for (int i = 0; i < listNotes.size(); ++i){
+                    NoteItem item = listNotes.get(i);
+                    if(item.isHoveredToDelete()){
+                        listItemsDelete.add(item);
+                        databaseSaveNoteItems.deleteNoteItem(item.getId());
+                    }
+                }
+                listNotes.removeAll(listItemsDelete);
+                Objects.requireNonNull(AddNotesFragment.listsObservable.get()).notifyItemRangeRemoved(0,size);
+            }
         }
     }
 
-    public static int countItemsChecked(){
+    public static int countItemsChecked(int pos){
         int i = 0;
-        for (NoteItem item : listNotes){
-            if(item.isHoveredToDelete()){
-                i++;
+        if(pos == 0){
+            for (QuoteItem item : listQuotes){
+                if(item.isStateChecked()){
+                    i++;
+                }
+            }
+        }
+        else{
+            for (NoteItem item : listNotes){
+                if(item.isHoveredToDelete()){
+                    i++;
+                }
             }
         }
         return  i;
     }
 
-    public static void updateTextCountNumberItemsChecked(){
+    public static void updateTextCountNumberItemsChecked(int pos){
         textViewNumberItemsChecked.post(new Runnable() {
             @Override
             public void run() {
-                int count = countItemsChecked();
+                int count = countItemsChecked(pos);
                 if(count != 0){
                     disableClickedForButtonDelete(false);
                 }
                 else {
                     disableClickedForButtonDelete(true);
                 }
-                textViewNumberItemsChecked.setText(count > 0 ? "Đã chọn "+String.valueOf(countItemsChecked())+" mục" : "Chọn mục");
+                textViewNumberItemsChecked.setText(count > 0 ? "Đã chọn "+String.valueOf(countItemsChecked(pos))+" mục" : "Chọn mục");
             }
         });
     }
@@ -368,10 +485,10 @@ public class NotesActivityMain extends AppCompatActivity {
     //AND EXPANDABLE FALSE LOST VIEW
 
     public void saveTheLastStateOfListNoteItemsToDatabase(){
-        if(lists.size() != 0){
+        if(fragmentList.size() != 0){
             for (NoteItem item : listNotes){
                 if(isShowed.get()){
-                    item.setExpandable(item.isTempExpandable() ? true : false);
+                    item.setExpandable(item.isTempExpandable());
                 }
                 databaseSaveNoteItems.updateNoteItemEnd(item);
             }

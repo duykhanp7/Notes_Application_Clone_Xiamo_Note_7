@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_corner_layout_bottom_sheet_add_notes">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:id="@+id/layoutInput"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:layout_marginTop="-3dp"
+                android:clickable="false"
+                android:enabled="false"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginEnd="20dp"
+                app:placeholderText="Thêm ghi chú"
+                android:textSize="20sp"
+                app:hintTextColor="@color/brown"
+                android:focusableInTouchMode="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:boxStrokeWidth="0dp"
+                app:boxBackgroundMode="outline"
+                app:boxBackgroundColor="@android:color/transparent"
+                android:background="@android:color/transparent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/custom_cursor_color"
+                    android:textSize="18sp"
+                    android:textColorHint="@color/brown"
+                    android:textColor="@color/black"
+                    android:nestedScrollingEnabled="true"
+                    android:fontFamily="monospace"
+                    android:inputType="textMultiLine"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:overScrollMode="always"
+                    android:scrollbarSize="0dp"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+                    android:focusableInTouchMode="true"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/textInputQuotes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/buttonCompleteEditNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="monospace"
+            android:text="Hoàn tất"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="18sp"
+            android:layout_below="@+id/layoutInput"/>
+
+
+    </RelativeLayout>
+
+</layout>

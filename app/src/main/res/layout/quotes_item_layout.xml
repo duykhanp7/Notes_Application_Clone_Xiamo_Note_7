@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="quotes"
+            type="com.example.notesapplication.model.QuoteItem" />
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:cardCornerRadius="15dp"
+        android:elevation="10dp"
+        android:id="@+id/itemQuote"
+        android:clickable="true"
+        android:backgroundTint="@color/custom_item_note_clicked"
+        android:focusable="true"
+        android:longClickable="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="7dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layoutMain">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{quotes.quotes}"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:gravity="start|center"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:fontFamily="monospace"
+                    android:id="@+id/textViewQuote"
+                    android:layout_marginStart="13dp"
+                    android:paddingEnd="70dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{quotes.timeSetQuotes}"
+                    android:textColor="@color/black"
+                    android:fontFamily="monospace"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="20dp"/>
+
+            </LinearLayout>
+
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radioButtonCheckDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:checked="@{quotes.stateChecked ? true:false}"
+                android:visibility="@{quotes.stateCheckedToDelete ? View.VISIBLE : View.GONE}" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

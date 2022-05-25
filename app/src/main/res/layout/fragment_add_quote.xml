@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="addNotesFragmentItem"
-            type="com.example.notesapplication.fragment.AddNotesFragment" />
+            name="addQuotesFragmentItem"
+            type="com.example.notesapplication.fragment.AddQuoteFragment" />
         <import type="android.view.View"/>
     </data>
 
@@ -20,7 +20,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchViewFilterAdapter"
@@ -33,25 +35,27 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_search_view_layout"
-                android:drawableStart="@drawable/ic_search"
                 android:clickable="true"
+                android:drawableStart="@drawable/ic_search"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:focusedByDefault="true"
                 bind:iconifiedByDefault="false"
+                bind:closeIcon="@drawable/ic_close"
                 bind:queryBackground="@null"
-                bind:queryHint="Tìm kiếm nhiệm vụ" />
+                bind:queryHint="Tìm kiếm ghi vụ"
+                android:visibility="@{addQuotesFragmentItem.modeDelete ? View.GONE:View.VISIBLE}"/>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewListNotes"
+                quotesAdapter="@{addQuotesFragmentItem.quotesItemAdapterObservableField}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="70dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
-                android:paddingBottom="80dp"
-                bind:setAdapter="@{addNotesFragmentItem.listsObservable}" />
+                android:paddingBottom="80dp" />
 
 
             <ImageView
@@ -61,20 +65,21 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="200dp"
                 android:src="@drawable/ic__note_empty"
-                android:visibility="@{addNotesFragmentItem.lists.size() != 0 ? View.INVISIBLE:View.VISIBLE}" />
+                android:visibility="@{addQuotesFragmentItem.sizeItemsQuote > 0 ? View.GONE:View.VISIBLE}" />
+
             <TextView
+                android:id="@+id/textViewNull"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Không còn nhiệm vụ"
-                android:textSize="20sp"
-                android:fontFamily="monospace"
                 android:layout_below="@+id/ic_empty_notes"
-                android:gravity="center"
-                android:layout_marginStart="90dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="20dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="Không có ghi chú nào ở đây"
                 android:textColor="@color/brown"
-                android:visibility="@{addNotesFragmentItem.lists.size() != 0 ? View.INVISIBLE:View.VISIBLE}"
-                android:id="@+id/textViewNull"/>
+                android:textSize="20sp"
+                android:visibility="@{addQuotesFragmentItem.sizeItemsQuote > 0 ? View.GONE:View.VISIBLE}"/>
 
         </RelativeLayout>
 

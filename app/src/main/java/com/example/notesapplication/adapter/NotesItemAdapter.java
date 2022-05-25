@@ -1,6 +1,8 @@
 package com.example.notesapplication.adapter;
 
+import static com.example.notesapplication.fragment.AddNotesFragment.isHoveredDelete;
 import static com.example.notesapplication.main.NotesActivityMain.fragmentManager;
+import static com.example.notesapplication.main.NotesActivityMain.viewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,6 +23,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notesapplication.databinding.CustomItemNotesBinding;
 import com.example.notesapplication.main.NotesActivityMain;
 import com.example.notesapplication.R;
 import com.example.notesapplication.resources.ValueResources;
@@ -93,7 +96,7 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String usersInput = charSequence.toString();
-                if(usersInput.isEmpty()){
+                if(usersInput.trim().isEmpty()){
                     noteItemList = noteItemListReserve;
                 }
                 else{
@@ -148,6 +151,14 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             this.noteItemList = noteItemList;
             itemView.getRoot().setOnClickListener(this);
             itemView.getRoot().setOnLongClickListener(this);
+            itemView.itemNote.setOnLongClickListener(this);
+            itemView.layoutSub.setOnLongClickListener(this);
+            itemView.checkBoxNotes.setOnLongClickListener(this);
+            itemView.textViewNotes.setOnLongClickListener(this);
+            itemView.textViewOnTimeNotes.setOnLongClickListener(this);
+            itemView.recyclerChildrenNotes.setOnLongClickListener(this);
+            itemView.textViewOnTimeNotesBelow.setOnLongClickListener(this);
+
             onClickCallBack(itemView.getRoot());
         }
 
@@ -161,13 +172,19 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
             }
             else{
                 noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
-                NotesActivityMain.updateTextCountNumberItemsChecked();
+                NotesActivityMain.updateTextCountNumberItemsChecked(1);
             }
         }
 
         @Override
         public boolean onLongClick(View view) {
-            Log.i("AAA","IS LONG CLICKED ITEM PARENT");
+            viewPager2.setUserInputEnabled(false);
+            onLongClickItem();
+            return true;
+        }
+
+
+        public void onLongClickItem(){
             if(!isShowed.get()){
                 NotesActivityMain.showTabLayout(View.GONE);
                 NotesActivityMain.showTopLayoutDelete(View.VISIBLE);
@@ -177,8 +194,8 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                 isShowed.set(true);
             }
             noteItemList.get(getAdapterPosition()).setHoveredToDelete(true);
-            NotesActivityMain.updateTextCountNumberItemsChecked();
-            return true;
+            NotesActivityMain.updateTextCountNumberItemsChecked(1);
+            isHoveredDelete.set(true);
         }
 
 
@@ -258,10 +275,11 @@ public class NotesItemAdapter extends RecyclerView.Adapter<NotesItemAdapter.View
                 @Override
                 public void onClick(View view) {
                     noteItemList.get(getAdapterPosition()).setHoveredToDelete(!noteItemList.get(getAdapterPosition()).isHoveredToDelete());
-                    NotesActivityMain.updateTextCountNumberItemsChecked();
+                    NotesActivityMain.updateTextCountNumberItemsChecked(1);
                 }
             });
         }
+
 
 
         public void OpenBottomDialog(View view){

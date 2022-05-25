@@ -26,6 +26,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
+import com.example.notesapplication.databinding.CustomLayoutBottomAddNotesBinding;
 import com.example.notesapplication.model.ChildrenNoteItem;
 import com.example.notesapplication.model.NoteItem;
 import com.example.notesapplication.R;

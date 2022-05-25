@@ -31,7 +31,9 @@
             android:orientation="vertical"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            android:id="@+id/layoutSub"
+            android:longClickable="true">
 
             <!--CHECK BOX-->
             <CheckBox
@@ -40,11 +42,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:buttonTint="@color/custom_tab_layout_item_clicked"
                 android:checked="@{noteItem.checked}"
-                android:layout_marginTop="15dp"
-                android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title=="" ? View.GONE:View.VISIBLE}' />
+                android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title=="" ? View.GONE:View.VISIBLE}'
+                android:longClickable="true"/>
 
             <!--TEXT VIEW NOTE-->
 
@@ -63,7 +66,8 @@
                 android:textStyle="bold"
                 android:visibility='@{noteItem.listNotes.size() > 1 ? View.VISIBLE : noteItem.title=="" ? View.GONE:View.VISIBLE}'
                 bind:strikeThrough="@{noteItem.checked}"
-                bind:textColorChangeByChecked="@{noteItem.checked}" />
+                bind:textColorChangeByChecked="@{noteItem.checked}"
+                android:longClickable="true"/>
 
 
             <TextView
@@ -77,6 +81,7 @@
                 android:text="@={noteItem.timeNotifyNote}"
                 android:textColor="@{noteItem.overTime ? @color/red : noteItem.checked ? @color/brown:@color/black}"
                 android:textSize="15sp"
+                android:longClickable="true"
                 android:visibility='@{(noteItem.title.empty &amp; noteItem.listNotes.size()==1) ? View.GONE:View.VISIBLE}' />
 
             <TextView
@@ -93,14 +98,14 @@
 
 
             <RadioButton
+                android:id="@+id/radioButtonDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButtonDelete"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="-20dp"
                 android:checked='@{noteItem.hoveredToDelete}'
-                android:visibility='@{NotesItemAdapter.isShowed ? View.VISIBLE:View.GONE}'/>
+                android:visibility='@{NotesItemAdapter.isShowed ? View.VISIBLE:View.GONE}' />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="wrap_content"
@@ -121,6 +126,7 @@
                 android:layout_marginTop="5dp"
                 android:clickable="true"
                 android:focusableInTouchMode="true"
+                android:longClickable="true"
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 android:paddingStart="20dp"
@@ -137,6 +143,7 @@
                 android:layout_below="@+id/recyclerChildrenNotes"
                 android:layout_alignStart="@+id/textViewNotes"
                 android:layout_marginStart="45dp"
+                android:longClickable="true"
                 android:fontFamily="monospace"
                 android:text="@={noteItem.timeNotifyNote}"
                 android:textColor="@{noteItem.overTime ? @color/red : noteItem.checked ? @color/brown:@color/black}"
